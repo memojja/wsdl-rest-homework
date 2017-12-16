@@ -13,4 +13,6 @@ public class Choice {
     private String value;
     @OneToOne
     private Question question;
+    @Enumerated(EnumType.STRING)
+    Choices choices;
 }
