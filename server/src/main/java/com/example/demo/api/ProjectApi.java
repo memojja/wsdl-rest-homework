@@ -1,5 +1,7 @@
 package com.example.demo.api;
 
+import com.example.demo.exception.ChoiceException;
+import com.example.demo.exception.ScoreException;
 import com.example.demo.model.Choice;
 import com.example.demo.model.Question;
 import com.example.demo.model.Score;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/project")
@@ -54,9 +57,9 @@ public class ProjectApi {
     }
 
     @RequestMapping(value = "/questions/{id}/choices",method = RequestMethod.GET)
-    public List<Choice> getChoiceByQuestionId(@PathVariable("id")Long id){
-        Question question = questionRepository.findOne(id);
-        return choiceRepository.findChoiceByQuestion(question);
+    public Optional<List<Choice>> getChoiceByQuestionId(@PathVariable("id")Long id){
+        this.validateChoice(questionRepository.findOne(id));
+        return choiceRepository.findChoiceByQuestion(questionRepository.findOne(id));
     }
 
     @RequestMapping(value = "/questions/{id}/choices",method = RequestMethod.POST)
@@ -84,7 +87,8 @@ public class ProjectApi {
     }
 
     @RequestMapping(value = "/users/{id}/score",method = RequestMethod.GET)
-    public Score getScoreByUserId(@PathVariable("id") Long id){
+    public Optional<Score> getScoreByUserId(@PathVariable("id") Long id){
+        this.validateScore(userRepository.findOne(id));
         return scoreRepository.findScoreByUser(userRepository.findOne(id));
     }
 
@@ -94,5 +98,18 @@ public class ProjectApi {
         return scoreRepository.save(score);
     }
 
+    private void validateScore(User user){
+        this.scoreRepository.findScoreByUser(user).orElseThrow(
+                () -> new ScoreException(user.getId())
+        );
+    }
+
+    private void validateChoice(Question question){
+        this.choiceRepository.findChoiceByQuestion(question).orElseThrow(
+                () -> new ChoiceException(question.getId())
+        );
+    }
+
+    
 
 }
