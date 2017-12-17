@@ -12,6 +12,9 @@ import com.example.demo.repository.ScoreRepository;
 import com.example.demo.repository.UserRepository;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -99,6 +102,11 @@ public class ProjectApi {
     public Score createScoreByUserId(@PathVariable("id") Long id,@Valid @RequestBody Score score){
         score.setUser(userRepository.findOne(id));
         return scoreRepository.save(score);
+    }
+
+    @RequestMapping(value = "competition")
+    public Page<Question> getQuestionList(Pageable pageable){
+            return questionRepository.findAll(pageable);
     }
 
     private void validateScore(User user){
