@@ -11,10 +11,9 @@ public class Choice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String value;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Question question;
     @Enumerated(EnumType.STRING)
     Choices choices;
-    @Enumerated(EnumType.STRING)
-    IsTrue isTrue;
+    Boolean isTrue;
 }
