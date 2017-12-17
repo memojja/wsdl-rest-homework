@@ -25,6 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/project")
+@CrossOrigin(origins = "*")
 public class ProjectApi {
 
     private final QuestionRepository questionRepository;
