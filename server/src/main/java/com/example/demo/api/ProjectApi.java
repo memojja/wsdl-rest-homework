@@ -12,6 +12,7 @@ import com.example.demo.repository.ScoreRepository;
 import com.example.demo.repository.UserRepository;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,9 +52,10 @@ public class ProjectApi {
         return questionRepository.findOne(id);
     }
 
+    @Transactional
     @RequestMapping(value = "/questions/{id}",method = RequestMethod.DELETE)
     public void deleteQuestionById(@PathVariable("id")Long id){
-         questionRepository.delete(id);
+        choiceRepository.deleteAllByQuestion(questionRepository.findOne(id));
     }
 
     @RequestMapping(value = "/questions/{id}/choices",method = RequestMethod.GET)
@@ -81,9 +83,10 @@ public class ProjectApi {
         return user;
     }
 
+    @Transactional
     @RequestMapping(value = "/users/{id}",method = RequestMethod.DELETE)
     public void deleteUserById(@PathVariable("id")Long id){
-        userRepository.delete(id);
+        scoreRepository.deleteAllByUser(userRepository.findOne(id));
     }
 
     @RequestMapping(value = "/users/{id}/score",method = RequestMethod.GET)
@@ -109,7 +112,5 @@ public class ProjectApi {
                 () -> new ChoiceException(question.getId())
         );
     }
-
-    
 
 }

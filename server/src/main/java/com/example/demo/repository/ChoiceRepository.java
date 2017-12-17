@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ChoiceRepository extends JpaRepository<Choice,Long>{
     Optional<List<Choice>> findChoiceByQuestion(Question question);
+    void deleteAllByQuestion(Question question);
 }
