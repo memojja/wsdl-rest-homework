@@ -15,4 +15,6 @@ public class Choice {
     private Question question;
     @Enumerated(EnumType.STRING)
     Choices choices;
+    @Enumerated(EnumType.STRING)
+    IsTrue isTrue;
 }
