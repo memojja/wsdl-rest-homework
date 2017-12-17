@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,8 +106,10 @@ public class ProjectApi {
     }
 
     @RequestMapping(value = "competition")
-    public Page<Question> getQuestionList(Pageable pageable){
-            return questionRepository.findAll(pageable);
+    public HashMap<Page<Question>, Page<Choice>> getQuestionList(Pageable pageable){
+        HashMap<Page<Question>, Page<Choice>> listMap = new HashMap<>();
+        listMap.put(questionRepository.findAll(pageable),choiceRepository.findAll(pageable));
+        return listMap;
     }
 
     private void validateScore(User user){
