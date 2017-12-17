@@ -1,0 +1,46 @@
+.header{
+	vertical-align: middle;
+}
+.header .page-title{
+  float: left;
+}
+.header .button{
+  float: right;
+}
+.modal-content .header{
+	border-bottom: 1px solid #e9ecef;
+}
+.border-top{
+  border-top: 1px solid #e9ecef;
+}
+.table-opt{
+ float: right;
+}
+.modal {
+	display: block;
+	z-index: 1;
+	left: 250px;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+}
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
